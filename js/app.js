@@ -75,14 +75,16 @@ function MenuSearchService($http) {
 			var array = result.data.menu_items;
 
 			var found = [];
-			for(var i = 0; i < array.length; i++) {
-				var object = array[i];
 
-				if(object.description.indexOf(searchTerm) != -1) {
-					found.push(object);
+			if(searchTerm.length > 0) {
+				for(var i = 0; i < array.length; i++) {
+					var object = array[i];
+
+					if(object.description.indexOf(searchTerm) != -1) {
+						found.push(object);
+					}
 				}
 			}
-			
 			return found;
 		});
 	};
