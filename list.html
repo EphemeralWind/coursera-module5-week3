@@ -2,8 +2,6 @@
   <li ng-repeat="item in list.items">
     {{ item.name }},  {{ item.short_name }}, {{item.description}}
      <button ng-click="list.remove({index: $index});">Don't want this one!</button>
-    }
-    }
   </li>
 </ol>
 <div class="error" ng-ifz="list.cookiesInList()">Nothing found.</div>
