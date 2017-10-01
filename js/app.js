@@ -9,9 +9,10 @@ angular.module('NarrowItDownApp', [])
 
 function FoundItemDirective() {
 	var ddo = {
+		restrict: 'E',
 		templateUrl: 'list.html',
 		scope: {
-			items: '<',
+			foundItems: '<',
 			onRemove: '&'
 		},
 		controller: FoundItemDirectiveController,
@@ -25,9 +26,12 @@ function FoundItemDirective() {
 function FoundItemDirectiveController() {
 	var con = this;
 
-	con.remove = function(index) {
+	con.meh = "MEH";
 
-	};
+	con.isListEmpty = function() {
+		console.log("Check list empty", con.foundItems);
+		return con.foundItems != null && con.foundItems.length == 0;
+	}
 }
 
 
@@ -36,13 +40,24 @@ function NarrowItDownController(MenuSearchService) {
 	var con = this;
 
 	con.crap = "CRAP" + MenuSearchService.doShit();
+	con.found = null;
+	con.input = "";
 
-	var promise = MenuSearchService.getMatchedMenuItems("eggplant");
 
-	promise.then(function(result) {
-		console.log("Ret ", result);
-		con.found = result;
-	});
+	con.remove = function(index) {
+		console.log("Remove 2", index);
+		con.found.splice(index, 1);
+	};
+
+	con.search = function() {
+		console.log("Keyword = ~" + con.input + "~");
+		var promise = MenuSearchService.getMatchedMenuItems(con.input);
+
+		promise.then(function(result) {
+			console.log("Ret ", result);
+			con.found = result;
+		});
+	}
 }
 
 MenuSearchService.$inject = ['$http'];
